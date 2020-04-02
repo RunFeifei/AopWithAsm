@@ -1,0 +1,8 @@
+apply plugin: 'groovy'
+apply plugin: 'java'
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+}
