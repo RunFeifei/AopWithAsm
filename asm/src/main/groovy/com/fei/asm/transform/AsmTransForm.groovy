@@ -1,11 +1,19 @@
 package com.fei.asm.transform
 
 import com.android.build.api.transform.*
+import org.gradle.api.logging.Logger
 
 /**
  * https://juejin.im/post/5d8f285de51d4578495472aa
  */
 public class AsmTransForm extends Transform {
+
+    Logger log
+
+
+    AsmTransForm(Logger logger) {
+        log = logger
+    }
 
     @Override
     String getName() {
@@ -30,6 +38,7 @@ public class AsmTransForm extends Transform {
     @Override
     void transform(TransformInvocation transformInvocation) throws TransformException, InterruptedException, IOException {
         super.transform(transformInvocation)
+        log.error "AsmTransForm-->transform"
         TransformOutputProvider outputProvider = transformInvocation.outputProvider
         if (outputProvider != null) {
             outputProvider.deleteAll()
@@ -53,7 +62,7 @@ public class AsmTransForm extends Transform {
             return
         }
         input.file.eachFile { File file ->
-            println "processDirectoryInput--" + file.name
+            log.error "processDirectoryInput--" + file.name
 
         }
 
@@ -65,7 +74,7 @@ public class AsmTransForm extends Transform {
             return
         }
         input.file.eachFile { File file ->
-            println "processJarInput--" + file.name
+            log.error "processJarInput--" + file.name
 
         }
     }

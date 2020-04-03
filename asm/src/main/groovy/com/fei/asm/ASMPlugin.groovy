@@ -20,7 +20,7 @@ class ASMPlugin implements Plugin<Project> {
             throw new GradleException("ASMPlugin--> can not found Android Application")
         }
         def android = project.extensions.getByType(AppExtension)
-        AsmTransForm asmTransForm = new AsmTransForm()
+        AsmTransForm asmTransForm = new AsmTransForm(log)
         android.registerTransform(transform)
     }
 }
