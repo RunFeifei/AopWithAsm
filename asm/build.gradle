@@ -1,8 +1,29 @@
 apply plugin: 'groovy'
-apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'com.novoda.bintray-release'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
 
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation 'com.android.tools.build:gradle:3.0.1'
+    //ASM相关依赖
+    implementation 'org.ow2.asm:asm:7.1'
+    implementation 'org.ow2.asm:asm-util:7.0'
+    implementation 'org.ow2.asm:asm-commons:7.1'
+}
 
+
+//../gradlew clean build bintrayUpload -PbintrayUser=feifei -PbintrayKey=69175aa7101760b64a7fee5aea872d4d84d14c8c -PdryRun=false
+publish {
+    userOrg = 'feifei'
+    groupId = 'com.fei.asm.plugin'
+    artifactId = 'asm-plugin'
+    publishVersion = '1.0.1'
+    desc = 'this is com.fei.asm.plugin:asm-plugin ~_~'
 }
