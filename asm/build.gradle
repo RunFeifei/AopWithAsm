@@ -23,6 +23,6 @@ publish {
     userOrg = 'feifei'
     groupId = 'com.fei.asm.plugin'
     artifactId = 'asm-plugin'
-    publishVersion = '1.0.5'
+    publishVersion = '1.0.7'
     desc = 'this is com.fei.asm.plugin:asm-plugin ~_~'
 }

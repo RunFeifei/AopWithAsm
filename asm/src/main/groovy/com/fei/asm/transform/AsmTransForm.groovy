@@ -28,7 +28,7 @@ public class AsmTransForm extends Transform {
 
     @Override
     Set<? super QualifiedContent.Scope> getScopes() {
-        return QualifiedContent.Scope.PROJECT
+        return TransformManager.SCOPE_FULL_PROJECT
     }
 
     @Override
