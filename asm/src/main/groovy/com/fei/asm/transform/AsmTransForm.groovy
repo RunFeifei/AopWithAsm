@@ -58,19 +58,20 @@ public class AsmTransForm extends Transform {
         }
     }
 
-    private static void processDirectoryInput(DirectoryInput input, TransformOutputProvider outputProvider) {
+    private void processDirectoryInput(DirectoryInput input, TransformOutputProvider outputProvider) {
+        log.error "AsmTransForm-->processDirectoryInput"
         if (!input.file.isDirectory()) {
             return
         }
         input.file.eachFile { File file ->
             log.error "processDirectoryInput--" + file.name
-
         }
 
 
     }
 
-    private static void processJarInput(JarInput input, TransformOutputProvider outputProvider) {
+    private void processJarInput(JarInput input, TransformOutputProvider outputProvider) {
+        log.error "AsmTransForm-->processJarInput"
         if (!input.file.isDirectory()) {
             return
         }
