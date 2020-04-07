@@ -4,6 +4,9 @@ import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
 import org.gradle.api.logging.Logger
 
+import java.util.jar.JarEntry
+import java.util.jar.JarFile
+
 /**
  * https://juejin.im/post/5d8f285de51d4578495472aa
  */
@@ -59,24 +62,26 @@ public class AsmTransForm extends Transform {
     }
 
     private void processDirectoryInput(DirectoryInput input, TransformOutputProvider outputProvider) {
-        log.error "AsmTransForm-->processDirectoryInput"
         if (!input.file.isDirectory()) {
             return
         }
-        input.file.eachFile { File file ->
-            log.error "processDirectoryInput--" + file.name
+        input.file.eachFileRecurse { File file ->
+            if (file.isFile()) {
+                log.error "processDirectoryInput--directoryName--" + input.file.name + "--className--" + file.name
+            }
         }
-
-
     }
 
-    private void processJarInput(JarInput input, TransformOutputProvider outputProvider) {
-        log.error "AsmTransForm-->processJarInput"
-        if (!input.file.isDirectory()) {
+    private void processJarInput(JarInput jarInput, TransformOutputProvider outputProvider) {
+        if (!jarInput.file.getAbsolutePath().endsWith(".jar")) {
             return
         }
-        input.file.eachFile { File file ->
-            log.error "processJarInput--" + file.name
+        def jarName = jarInput.name
+        JarFile jarFile = new JarFile(jarInput.file)
+        Enumeration enumeration = jarFile.entries()
+        while (enumeration.hasMoreElements()) {
+            JarEntry jarEntry = enumeration.nextElement()
+            log.error "processJarInput--jarName--" + jarName + "--className--" + jarEntry.getName()
         }
     }
 
