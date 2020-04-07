@@ -1,6 +1,7 @@
 package com.fei.asm.transform
 
 import com.android.build.api.transform.*
+import com.android.build.gradle.internal.pipeline.TransformManager
 import org.gradle.api.logging.Logger
 
 /**
