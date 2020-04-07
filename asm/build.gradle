@@ -19,11 +19,10 @@ dependencies {
 }
 
 
-//../gradlew clean build bintrayUpload -PbintrayUser=feifei -PbintrayKey=69175aa7101760b64a7fee5aea872d4d84d14c8c -PdryRun=false
 publish {
     userOrg = 'feifei'
     groupId = 'com.fei.asm.plugin'
     artifactId = 'asm-plugin'
-    publishVersion = '1.0.2'
+    publishVersion = '1.0.5'
     desc = 'this is com.fei.asm.plugin:asm-plugin ~_~'
 }

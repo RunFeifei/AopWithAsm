@@ -75,7 +75,6 @@ public class AsmTransForm extends Transform {
         }
         input.file.eachFile { File file ->
             log.error "processJarInput--" + file.name
-
         }
     }
 

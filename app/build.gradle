@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.fei.run.asm'
 
 android {
     compileSdkVersion 23

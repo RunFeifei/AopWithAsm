@@ -6,7 +6,7 @@ import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
-class ASMPlugin implements Plugin<Project> {
+public class ASMPlugin implements Plugin<Project> {
 
 
     @Override
@@ -15,12 +15,8 @@ class ASMPlugin implements Plugin<Project> {
         log.error "================================================"
         log.error "ASMPlugin"
         log.error "================================================"
-
-        if (!project.plugins.hasPlugin("com.android.plugin")) {
-            throw new GradleException("ASMPlugin--> can not found Android Application")
-        }
         def android = project.extensions.getByType(AppExtension)
         AsmTransForm asmTransForm = new AsmTransForm(log)
-        android.registerTransform(transform)
+        android.registerTransform(asmTransForm)
     }
 }
