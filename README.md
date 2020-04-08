@@ -1,5 +1,6 @@
 # LearnAopWithAsm
 学习ASM  
+### 第一步学习gradle插件,Transform开发  
 #### 修改AsmTransForm.groovy完成要实现的功能  
 #### 命令行切到asm module下,升级build.gradle的publish节点publishVersion  
 #### 在asm module下执行以下命令,把gradle插件发布到bintray上去  

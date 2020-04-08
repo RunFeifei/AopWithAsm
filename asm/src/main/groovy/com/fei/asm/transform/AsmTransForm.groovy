@@ -2,7 +2,11 @@ package com.fei.asm.transform
 
 import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
+import com.fei.asm.AppClassVisitor
+import org.apache.commons.io.FileUtils
 import org.gradle.api.logging.Logger
+import org.objectweb.asm.ClassReader
+import org.objectweb.asm.ClassWriter
 
 import java.util.jar.JarEntry
 import java.util.jar.JarFile
@@ -53,23 +57,25 @@ public class AsmTransForm extends Transform {
         }
         inputs.each { TransformInput input ->
             input.directoryInputs.each { DirectoryInput directoryInput ->
-                processDirectoryInput(directoryInput, outputProvider)
+                processDirectoryInput(directoryInput)
+                def dest = outputProvider.getContentLocation(directoryInput.name, directoryInput.contentTypes, directoryInput.scopes, Format.DIRECTORY)
+                FileUtils.copyDirectory(directoryInput.file, dest)
             }
-            input.jarInputs.each { JarInput jarInput ->
-                processJarInput(jarInput, outputProvider)
-            }
+//            input.jarInputs.each { JarInput jarInput ->
+//                processJarInput(jarInput, outputProvider)
+//            }
+
         }
     }
 
-    private void processDirectoryInput(DirectoryInput input, TransformOutputProvider outputProvider) {
-        if (!input.file.isDirectory()) {
-            return
-        }
-        input.file.eachFileRecurse { File file ->
-            if (file.isFile()) {
-                log.error "processDirectoryInput--directoryName--" + input.file.name + "--className--" + file.name
+    private void processDirectoryInput(DirectoryInput directoryInput) {
+        if (directoryInput.file.isDirectory()) {
+            directoryInput.file.eachFileRecurse { File file ->
+                processClassFile(file)
             }
         }
+
+
     }
 
     private void processJarInput(JarInput jarInput, TransformOutputProvider outputProvider) {
@@ -83,6 +89,26 @@ public class AsmTransForm extends Transform {
             JarEntry jarEntry = enumeration.nextElement()
             log.error "processJarInput--jarName--" + jarName + "--className--" + jarEntry.getName()
         }
+    }
+
+    private void processClassFile(File file) {
+//        if (file.isFile()) {
+        def name = file.name
+        //过滤掉R文件 BuildConfig 匿名内部类
+        if (!name.contains("\$")&&name.endsWith(".class") && !name.startsWith("R\$") && !"R.class".equals(name) && !"BuildConfig.class".equals(name)) {
+            log.error "processDirectoryInput--directoryName--" + file.absolutePath + "--className--" + file.name
+            ClassReader classReader = new ClassReader(file.bytes)
+            ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
+            AppClassVisitor appClassVisitor = new AppClassVisitor(classWriter)
+            classReader.accept(appClassVisitor, ClassReader.EXPAND_FRAMES)
+            byte[] code = classWriter.toByteArray()
+            FileOutputStream fos = new FileOutputStream(file.parentFile.absolutePath + File.separator + name)
+            fos.write(code)
+            fos.close()
+
+
+        }
+//            }
     }
 
 

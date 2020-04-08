@@ -7,7 +7,7 @@ import android.view.View;
 /**
  * Created by PengFeifei on 2020/4/7.
  */
-public class MainActivity extends Activity {
+public class MainActivity2 extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,6 @@ public class MainActivity extends Activity {
     }
 
     public void A() {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAA");
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
