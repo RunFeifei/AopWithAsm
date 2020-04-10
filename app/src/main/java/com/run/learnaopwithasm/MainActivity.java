@@ -14,7 +14,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TimeCache.setStartTime("ssss");
         setContentView(R.layout.activity_main);
         findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -25,7 +24,6 @@ public class MainActivity extends Activity {
     }
 
     public void A() {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAA");
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {

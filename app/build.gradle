@@ -11,6 +11,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+//        multiDexEnabled true
     }
 
     buildTypes {
@@ -30,6 +31,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
+//    implementation 'com.android.support:multidex:1.0.3'
     implementation project(':asmdepend')
 
 }
