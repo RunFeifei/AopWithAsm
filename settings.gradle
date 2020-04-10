@@ -1,3 +1,4 @@
 rootProject.name='LearnAopWithAsm'
 include ':app'
 include ':asm'
+include ':asmdepend'

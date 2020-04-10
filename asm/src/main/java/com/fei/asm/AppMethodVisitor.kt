@@ -16,7 +16,7 @@ class AppMethodVisitor constructor(private val className: String, methodVisitor:
 
         System.out.println("AppMethodVisitor--onMethodEnter-->${className}--${methodName}--0")
         mv.visitLdcInsn(methodName)
-        mv.visitMethodInsn(INVOKESTATIC, "com/fei/asm/TimeCache", "setStartTime", "(Ljava/lang/String;)V", false)
+        mv.visitMethodInsn(INVOKESTATIC, "com/fei/asmdepend/TimeCache", "setStartTime", "(Ljava/lang/String;)V", false)
         System.out.println("AppMethodVisitor--onMethodEnter-->${className}--${methodName}--1")
 
     }
@@ -25,10 +25,10 @@ class AppMethodVisitor constructor(private val className: String, methodVisitor:
 
         System.out.println("AppMethodVisitor--onMethodExit-->${className}--${methodName}")
         mv.visitLdcInsn(methodName)
-        mv.visitMethodInsn(INVOKESTATIC, "com/fei/asm/TimeCache", "setEndTime", "(Ljava/lang/String;)V", false)
+        mv.visitMethodInsn(INVOKESTATIC, "com/fei/asmdepend/TimeCache", "setEndTime", "(Ljava/lang/String;)V", false)
 
         mv.visitLdcInsn(methodName)
-        mv.visitMethodInsn(INVOKESTATIC, "com/fei/asm/TimeCache", "computeMethodTime", "(Ljava/lang/String;)V", false)
+        mv.visitMethodInsn(INVOKESTATIC, "com/fei/asmdepend/TimeCache", "computeMethodTime", "(Ljava/lang/String;)V", false)
     }
 
 }
