@@ -12,6 +12,7 @@ class AppClassVisitor constructor(classVisitor: ClassVisitor) : ClassVisitor(Opc
 
     private var isABSClass = false
     private var isInterface = false
+    private var isTimeCacheUtilFile = false
     private lateinit var className: String
 
     override fun visit(version: Int, access: Int, className: String?, signature: String?, superName: String?, interfaces: Array<out String>?) {
@@ -21,6 +22,7 @@ class AppClassVisitor constructor(classVisitor: ClassVisitor) : ClassVisitor(Opc
         className?.let {
             val supers = superName ?: ""
             this.className = it
+            this.isTimeCacheUtilFile = className.contains("TimeCache")
             System.out.println("AppClassVisitor--visit-->${className}--${supers}--${isABSClass}--${isInterface}")
         }
 
@@ -28,7 +30,7 @@ class AppClassVisitor constructor(classVisitor: ClassVisitor) : ClassVisitor(Opc
 
     override fun visitMethod(access: Int, methodName: String?, descriptor: String?, signature: String?, exceptions: Array<out String>?): MethodVisitor {
         val methodVisitor = super.visitMethod(access, methodName, descriptor, signature, exceptions)
-        if (isABSClass || isInterface) {
+        if (isABSClass || isInterface || isTimeCacheUtilFile) {
             return methodVisitor
         }
         methodName ?: return methodVisitor

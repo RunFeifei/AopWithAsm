@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.fei.asmdepend.TimeCache;
-
 /**
  * Created by PengFeifei on 2020/4/7.
  */
@@ -14,7 +12,6 @@ public class MainActivity2 extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TimeCache.setStartTime("ssss");
         setContentView(R.layout.activity_main);
         findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
             @Override

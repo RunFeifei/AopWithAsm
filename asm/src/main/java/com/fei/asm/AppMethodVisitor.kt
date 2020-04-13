@@ -8,10 +8,13 @@ import org.objectweb.asm.commons.AdviceAdapter
  * Created by PengFeifei on 2020/4/9.
  * 利用插件生成asm代码时,需要先对目标文件TimeCache先生成,然后再对Test文件生成
  */
-class AppMethodVisitor constructor(private val className: String, methodVisitor: MethodVisitor, access: Int, private val methodName: String,  descriptor: String?) : AdviceAdapter(Opcodes.ASM5, methodVisitor, access, methodName, descriptor) {
+class AppMethodVisitor constructor(private val className: String, methodVisitor: MethodVisitor, access: Int, private val methodName: String, descriptor: String?) : AdviceAdapter(Opcodes.ASM5, methodVisitor, access, methodName, descriptor) {
 
 
     override fun onMethodEnter() {
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
+        mv.visitLdcInsn("AppMethodVisitor--onMethodEnter")
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false)
 
 
         System.out.println("AppMethodVisitor--onMethodEnter-->${className}--${methodName}--0")
@@ -22,6 +25,9 @@ class AppMethodVisitor constructor(private val className: String, methodVisitor:
     }
 
     override fun onMethodExit(opcode: Int) {
+        mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;")
+        mv.visitLdcInsn("AppMethodVisitor--onMethodExit")
+        mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false)
 
         System.out.println("AppMethodVisitor--onMethodExit-->${className}--${methodName}")
         mv.visitLdcInsn(methodName)

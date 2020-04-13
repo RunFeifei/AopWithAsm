@@ -61,9 +61,9 @@ public class AsmTransForm extends Transform {
                 def dest = outputProvider.getContentLocation(directoryInput.name, directoryInput.contentTypes, directoryInput.scopes, Format.DIRECTORY)
                 FileUtils.copyDirectory(directoryInput.file, dest)
             }
-//            input.jarInputs.each { JarInput jarInput ->
-//                processJarInput(jarInput, outputProvider)
-//            }
+            input.jarInputs.each { JarInput jarInput ->
+                processJarInput(jarInput, outputProvider)
+            }
 
         }
     }
@@ -92,10 +92,9 @@ public class AsmTransForm extends Transform {
     }
 
     private void processClassFile(File file) {
-//        if (file.isFile()) {
         def name = file.name
         //过滤掉R文件 BuildConfig 匿名内部类
-        if (!name.contains("\$")&&name.endsWith(".class") && !name.startsWith("R\$") && !"R.class".equals(name) && !"BuildConfig.class".equals(name)) {
+        if (!name.contains("\$") && name.endsWith(".class") && !name.startsWith("R\$") && !"R.class".equals(name) && !"BuildConfig.class".equals(name)) {
             log.error "processDirectoryInput--directoryName--" + file.absolutePath + "--className--" + file.name
             ClassReader classReader = new ClassReader(file.bytes)
             ClassWriter classWriter = new ClassWriter(classReader, ClassWriter.COMPUTE_MAXS)
@@ -105,10 +104,7 @@ public class AsmTransForm extends Transform {
             FileOutputStream fos = new FileOutputStream(file.parentFile.absolutePath + File.separator + name)
             fos.write(code)
             fos.close()
-
-
         }
-//            }
     }
 
 
