@@ -1,5 +1,7 @@
 package com.fei.asmdepend;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ public class TimeCache {
 
     public static Map<String, Long> sStartTime = new HashMap<>();
     public static Map<String, Long> sEndTime = new HashMap<>();
+    public static int thresholdInMs;
 
     public static void setStartTime(String methodName) {
         final long startTime = System.nanoTime();
@@ -25,10 +28,24 @@ public class TimeCache {
     }
 
     public static void computeMethodTime(String methodName) {
-        long start = sStartTime.get(methodName);
-        long end = sEndTime.get(methodName);
+        Long start = sStartTime.get(methodName);
+        if (start == null) {
+            return;
+        }
+        Long end = sEndTime.get(methodName);
+        if (end == null) {
+            return;
+        }
         final long time = end - start;
-        System.out.println("TimeCache-->getCostTime--" + methodName + "--" + time);
+        final long timeMs = time / 1000000;
+        if (timeMs < TimeCache.thresholdInMs) {
+            return;
+        }
+        System.out.println("TimeCache-->getCostTime--" + methodName + "-- " + timeMs + "毫秒");
+        Log.i("MethodRunTimes", methodName + "-- " + timeMs + "毫秒");
     }
 
+    public static void setThresholdInMs(int thresholdInMs) {
+        TimeCache.thresholdInMs = thresholdInMs;
+    }
 }

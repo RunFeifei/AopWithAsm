@@ -6,6 +6,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:name=".APP"
         >
         <activity android:name="com.run.learnaopwithasm.MainActivity">
             <intent-filter>
