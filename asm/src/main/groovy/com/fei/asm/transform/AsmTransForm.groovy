@@ -5,6 +5,7 @@ import com.android.build.gradle.internal.pipeline.TransformManager
 import com.fei.asm.AppClassVisitor
 import org.apache.commons.io.FileUtils
 import org.gradle.api.logging.Logger
+import org.apache.commons.codec.digest.DigestUtils
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter
 
@@ -61,9 +62,21 @@ public class AsmTransForm extends Transform {
                 def dest = outputProvider.getContentLocation(directoryInput.name, directoryInput.contentTypes, directoryInput.scopes, Format.DIRECTORY)
                 FileUtils.copyDirectory(directoryInput.file, dest)
             }
+//            input.jarInputs.each { JarInput jarInput ->
+//                processJarInput(jarInput, outputProvider)
+//            }
+
             input.jarInputs.each { JarInput jarInput ->
-                processJarInput(jarInput, outputProvider)
+                def jarName = jarInput.name
+                def md5Name = DigestUtils.md5Hex(jarInput.file.getAbsolutePath())
+                if (jarName.endsWith(".jar")) {
+                    jarName = jarName.substring(0, jarName.length() - 4)
+                }
+                def dest = outputProvider.getContentLocation(jarName + md5Name,
+                        jarInput.contentTypes, jarInput.scopes, Format.JAR)
+                FileUtils.copyFile(jarInput.file, dest)
             }
+
 
         }
     }
